@@ -3,13 +3,35 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>index</title>
+    <title>List of users</title>
 </head>
 <body>
-<div>
-    <th:block th:each="msg : ${messages}">
-        <h1 th:text="${msg}"></h1>
-    </th:block>
+
+<div align="center">
+    <a href="addUser.html" th:href="@{/addUser}">Add user</a>
+</div>
+
+<div align="center">
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Last name</th>
+                <th>email</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}"/>
+            <td th:text="${user.name}"/>
+            <td th:text="${user.lastName}"/>
+            <td th:text="${user.email}"/>
+            <td>
+                <a th:href="@{'/' + ${user.id} + '/delete'}">Delete </a>
+                <a th:href="@{'/' + ${user.id} + '/edit'}">Edit</a></td>
+        </tr>
+        </tbody>
 </div>
 </body>
 </html>
