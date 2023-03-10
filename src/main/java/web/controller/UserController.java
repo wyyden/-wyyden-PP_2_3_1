@@ -1,28 +1,23 @@
 package web.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import web.Dao.UserDao;
-import web.Dao.UserDaoImp;
 import web.model.User;
+import web.service.UserService;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class UserController {
-    private final UserDao userDao;
+    private final UserService userService;
 
-    public UserController(UserDao userDao) {
-        this.userDao = userDao;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping(value = "/")
-    public String printWelcome(ModelMap model) {
-        model.addAttribute("users", userDao.getUserList());
+    public String listUsers(ModelMap model) {
+        model.addAttribute("users", userService.getList());
         return "index";
     }
 
@@ -34,25 +29,25 @@ public class UserController {
 
     @PostMapping()
     public String saveUser(@ModelAttribute("user") User user) {
-        userDao.save(user);
+        userService.save(user);
         return "redirect:/";
     }
 
     @GetMapping("/{id}/edit")
-    public String edit(ModelMap model, @PathVariable("id") int id) {
-        model.addAttribute("user", userDao.show(id));
+    public String edit(ModelMap model, @PathVariable("id") Long id) {
+        model.addAttribute("user", userService.get(id));
         return "edit";
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("user") User user, @PathVariable("id") int id) {
-        userDao.update(id, user);
+    public String update(@ModelAttribute("user") User user) {
+        userService.save(user);
         return "redirect:/";
     }
 
     @RequestMapping("/{id}/delete")
-    public String delete(@PathVariable("id") int id) {
-        userDao.delete(id);
+    public String delete(@PathVariable("id") Long id) {
+        userService.delete(id);
         return "redirect:/";
     }
 }
