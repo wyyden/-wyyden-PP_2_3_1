@@ -41,11 +41,11 @@ public class UserController {
 
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("user") User user) {
-        userService.save(user);
+        userService.update(user);
         return "redirect:/";
     }
 
-    @RequestMapping("/{id}/delete")
+    @DeleteMapping("/{id}/delete")
     public String delete(@PathVariable("id") Long id) {
         userService.delete(id);
         return "redirect:/";

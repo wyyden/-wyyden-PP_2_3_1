@@ -28,8 +28,12 @@
             <td th:text="${user.lastName}"/>
             <td th:text="${user.email}"/>
             <td>
-                <a th:href="@{'/' + ${user.id} + '/delete'}">Delete </a>
-                <a th:href="@{'/' + ${user.id} + '/edit'}">Edit</a></td>
+                <form th:method="DELETE" th:action="@{'/' + ${user.id} + '/delete'}">
+                    <input type="submit" value="Delete" style="width: 70px;"/>
+                </form>
+                <form th:action="@{'/' + ${user.id} + '/edit'}">
+                    <input type="submit" value="Edit" style="width: 70px;"/>
+                </form>
         </tr>
         </tbody>
 </div>
